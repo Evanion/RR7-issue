@@ -4,9 +4,6 @@
   "files": [],
   "references": [
     {
-      "path": "./apps/reprod-e2e"
-    },
-    {
       "path": "./apps/reprod"
     }
   ]

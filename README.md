@@ -1,101 +1,161 @@
-# Rr7Issue
+# React Router 7 vs React 19.1.0
 
-<a alt="Nx logo" href="https://nx.dev" target="_blank" rel="noreferrer"><img src="https://raw.githubusercontent.com/nrwl/nx/master/images/nx-logo.png" width="45"></a>
+There is an issue in React router, where if you upgrade to react 19.1.0, YOu are unable to start the project. This issue is ONLY present when running in a monorepo, and not if you create a standalone repo for the `react-router` app.
 
-✨ Your new, shiny [Nx workspace](https://nx.dev) is ready ✨.
+If you run `npm i` and try to start the app `npx nx dev reprod` Will cause you to see an error in the browser and console when you try to access the app in the browser
 
-[Learn more about this workspace setup and its capabilities](https://nx.dev/getting-started/tutorials/react-monorepo-tutorial?utm_source=nx_project&amp;utm_medium=readme&amp;utm_campaign=nx_projects) or run `npx nx graph` to visually explore what was created. Now, let's get you up to speed!
+```
+Unexpected Server Error
 
-## Run tasks
-
-To run the dev server for your app, use:
-
-```sh
-npx nx serve reprod
+TypeError: Cannot read properties of null (reading 'useContext')
 ```
 
-To create a production bundle:
+If you downgrade to react `19.0.0`, and try to run the app again, it will work just fine
 
-```sh
-npx nx build reprod
+```json
+{
+  "name": "@rr7-issue/source",
+  "version": "0.0.0",
+  "license": "MIT",
+  "scripts": {},
+  "private": true,
+  "dependencies": {
+    "@react-router/node": "^7.2.0",
+    "@react-router/serve": "^7.2.0",
+    "isbot": "^4.4.0",
+    "react": "19.0.0",
+    "react-dom": "19.0.0",
+    "react-router": "^7.2.0"
+  }
+  //...
+}
 ```
 
-To see all available targets to run for a project, run:
+Console error:
 
-```sh
-npx nx show project reprod
+```bash
+$ nx dev reprod
+
+> nx run @rr7-issue/reprod:dev
+
+> react-router dev
+
+  ➜  Local:   http://localhost:4200/
+Invalid hook call. Hooks can only be called inside of the body of a function component. This could happen for one of the following reasons:
+1. You might have mismatching versions of React and the renderer (such as React DOM)
+2. You might be breaking the Rules of Hooks
+3. You might have more than one copy of React in the same app
+See https://react.dev/link/invalid-hook-call for tips about how to debug and fix this problem.
+TypeError: Cannot read properties of null (reading 'useContext')
+    at Module.process.env.NODE_ENV.exports.useContext (C:\dev\rr7-issue\node_modules\react\cjs\react.development.js:1168:25)
+    at useInRouterContext (file:///C:/dev/rr7-issue/node_modules/react-router/dist/development/chunk-QMGIS6GS.mjs:4830:17)
+    at Router (file:///C:/dev/rr7-issue/node_modules/react-router/dist/development/chunk-QMGIS6GS.mjs:5747:6)
+    at Object.react-stack-bottom-frame (C:\dev\rr7-issue\apps\reprod\node_modules\react-dom\cjs\react-dom-server.node.development.js:8723:18)
+    at renderWithHooks (C:\dev\rr7-issue\apps\reprod\node_modules\react-dom\cjs\react-dom-server.node.development.js:4621:19)
+    at renderElement (C:\dev\rr7-issue\apps\reprod\node_modules\react-dom\cjs\react-dom-server.node.development.js:5056:23)
+    at retryNode (C:\dev\rr7-issue\apps\reprod\node_modules\react-dom\cjs\react-dom-server.node.development.js:5704:22)
+    at renderNodeDestructive (C:\dev\rr7-issue\apps\reprod\node_modules\react-dom\cjs\react-dom-server.node.development.js:5530:11)
+    at renderElement (C:\dev\rr7-issue\apps\reprod\node_modules\react-dom\cjs\react-dom-server.node.development.js:5434:15)
+    at retryNode (C:\dev\rr7-issue\apps\reprod\node_modules\react-dom\cjs\react-dom-server.node.development.js:5704:22)
+    at renderNodeDestructive (C:\dev\rr7-issue\apps\reprod\node_modules\react-dom\cjs\react-dom-server.node.development.js:5530:11)
+    at renderElement (C:\dev\rr7-issue\apps\reprod\node_modules\react-dom\cjs\react-dom-server.node.development.js:5434:15)
+    at retryNode (C:\dev\rr7-issue\apps\reprod\node_modules\react-dom\cjs\react-dom-server.node.development.js:5704:22)
+    at renderNodeDestructive (C:\dev\rr7-issue\apps\reprod\node_modules\react-dom\cjs\react-dom-server.node.development.js:5530:11)
+    at renderElement (C:\dev\rr7-issue\apps\reprod\node_modules\react-dom\cjs\react-dom-server.node.development.js:5434:15)
+    at retryNode (C:\dev\rr7-issue\apps\reprod\node_modules\react-dom\cjs\react-dom-server.node.development.js:5704:22)
+    at renderNodeDestructive (C:\dev\rr7-issue\apps\reprod\node_modules\react-dom\cjs\react-dom-server.node.development.js:5530:11)
+    at renderElement (C:\dev\rr7-issue\apps\reprod\node_modules\react-dom\cjs\react-dom-server.node.development.js:5434:15)
+    at retryNode (C:\dev\rr7-issue\apps\reprod\node_modules\react-dom\cjs\react-dom-server.node.development.js:5704:22)
+    at renderNodeDestructive (C:\dev\rr7-issue\apps\reprod\node_modules\react-dom\cjs\react-dom-server.node.development.js:5530:11)
+    at renderNode (C:\dev\rr7-issue\apps\reprod\node_modules\react-dom\cjs\react-dom-server.node.development.js:6080:18)
+    at renderChildrenArray (C:\dev\rr7-issue\apps\reprod\node_modules\react-dom\cjs\react-dom-server.node.development.js:5965:9)
+    at retryNode (C:\dev\rr7-issue\apps\reprod\node_modules\react-dom\cjs\react-dom-server.node.development.js:5717:13)
+    at renderNodeDestructive (C:\dev\rr7-issue\apps\reprod\node_modules\react-dom\cjs\react-dom-server.node.development.js:5530:11)
+    at renderElement (C:\dev\rr7-issue\apps\reprod\node_modules\react-dom\cjs\react-dom-server.node.development.js:5196:13)
+    at retryNode (C:\dev\rr7-issue\apps\reprod\node_modules\react-dom\cjs\react-dom-server.node.development.js:5704:22)
+    at renderNodeDestructive (C:\dev\rr7-issue\apps\reprod\node_modules\react-dom\cjs\react-dom-server.node.development.js:5530:11)
+    at finishFunctionComponent (C:\dev\rr7-issue\apps\reprod\node_modules\react-dom\cjs\react-dom-server.node.development.js:4665:13)
+    at renderElement (C:\dev\rr7-issue\apps\reprod\node_modules\react-dom\cjs\react-dom-server.node.development.js:5107:11)
+    at retryNode (C:\dev\rr7-issue\apps\reprod\node_modules\react-dom\cjs\react-dom-server.node.development.js:5704:22)
+    at renderNodeDestructive (C:\dev\rr7-issue\apps\reprod\node_modules\react-dom\cjs\react-dom-server.node.development.js:5530:11)
+    at renderElement (C:\dev\rr7-issue\apps\reprod\node_modules\react-dom\cjs\react-dom-server.node.development.js:5042:11)
+    at retryNode (C:\dev\rr7-issue\apps\reprod\node_modules\react-dom\cjs\react-dom-server.node.development.js:5704:22)
+    at renderNodeDestructive (C:\dev\rr7-issue\apps\reprod\node_modules\react-dom\cjs\react-dom-server.node.development.js:5530:11)
+    at renderElement (C:\dev\rr7-issue\apps\reprod\node_modules\react-dom\cjs\react-dom-server.node.development.js:5434:15)
+    at retryNode (C:\dev\rr7-issue\apps\reprod\node_modules\react-dom\cjs\react-dom-server.node.development.js:5704:22)
+    at renderNodeDestructive (C:\dev\rr7-issue\apps\reprod\node_modules\react-dom\cjs\react-dom-server.node.development.js:5530:11)
+    at renderNode (C:\dev\rr7-issue\apps\reprod\node_modules\react-dom\cjs\react-dom-server.node.development.js:6080:18)
+    at renderChildrenArray (C:\dev\rr7-issue\apps\reprod\node_modules\react-dom\cjs\react-dom-server.node.development.js:5965:9)
+    at retryNode (C:\dev\rr7-issue\apps\reprod\node_modules\react-dom\cjs\react-dom-server.node.development.js:5717:13)
+    at renderNodeDestructive (C:\dev\rr7-issue\apps\reprod\node_modules\react-dom\cjs\react-dom-server.node.development.js:5530:11)
+    at renderElement (C:\dev\rr7-issue\apps\reprod\node_modules\react-dom\cjs\react-dom-server.node.development.js:5196:13)
+    at retryNode (C:\dev\rr7-issue\apps\reprod\node_modules\react-dom\cjs\react-dom-server.node.development.js:5704:22)
+    at renderNodeDestructive (C:\dev\rr7-issue\apps\reprod\node_modules\react-dom\cjs\react-dom-server.node.development.js:5530:11)
+    at finishFunctionComponent (C:\dev\rr7-issue\apps\reprod\node_modules\react-dom\cjs\react-dom-server.node.development.js:4665:13)
+    at renderElement (C:\dev\rr7-issue\apps\reprod\node_modules\react-dom\cjs\react-dom-server.node.development.js:5107:11)
+    at retryNode (C:\dev\rr7-issue\apps\reprod\node_modules\react-dom\cjs\react-dom-server.node.development.js:5704:22)
+    at performWork (C:\dev\rr7-issue\apps\reprod\node_modules\react-dom\cjs\react-dom-server.node.development.js:6507:19)
+    at AsyncLocalStorage.run (node:internal/async_local_storage/async_hooks:91:14)
+    at C:\dev\rr7-issue\apps\reprod\node_modules\react-dom\cjs\react-dom-server.node.development.js:7131:31
+Invalid hook call. Hooks can only be called inside of the body of a function component. This could happen for one of the following reasons:
+1. You might have mismatching versions of React and the renderer (such as React DOM)
+2. You might be breaking the Rules of Hooks
+3. You might have more than one copy of React in the same app
+See https://react.dev/link/invalid-hook-call for tips about how to debug and fix this problem.
+TypeError: Cannot read properties of null (reading 'useContext')
+    at Module.process.env.NODE_ENV.exports.useContext (C:\dev\rr7-issue\node_modules\react\cjs\react.development.js:1168:25)
+    at useInRouterContext (file:///C:/dev/rr7-issue/node_modules/react-router/dist/development/chunk-QMGIS6GS.mjs:4830:17)
+    at Router (file:///C:/dev/rr7-issue/node_modules/react-router/dist/development/chunk-QMGIS6GS.mjs:5747:6)
+    at Object.react-stack-bottom-frame (C:\dev\rr7-issue\apps\reprod\node_modules\react-dom\cjs\react-dom-server.node.development.js:8723:18)
+    at renderWithHooks (C:\dev\rr7-issue\apps\reprod\node_modules\react-dom\cjs\react-dom-server.node.development.js:4621:19)
+    at renderElement (C:\dev\rr7-issue\apps\reprod\node_modules\react-dom\cjs\react-dom-server.node.development.js:5056:23)
+    at retryNode (C:\dev\rr7-issue\apps\reprod\node_modules\react-dom\cjs\react-dom-server.node.development.js:5704:22)
+    at renderNodeDestructive (C:\dev\rr7-issue\apps\reprod\node_modules\react-dom\cjs\react-dom-server.node.development.js:5530:11)
+    at renderElement (C:\dev\rr7-issue\apps\reprod\node_modules\react-dom\cjs\react-dom-server.node.development.js:5434:15)
+    at retryNode (C:\dev\rr7-issue\apps\reprod\node_modules\react-dom\cjs\react-dom-server.node.development.js:5704:22)
+    at renderNodeDestructive (C:\dev\rr7-issue\apps\reprod\node_modules\react-dom\cjs\react-dom-server.node.development.js:5530:11)
+    at renderElement (C:\dev\rr7-issue\apps\reprod\node_modules\react-dom\cjs\react-dom-server.node.development.js:5434:15)
+    at retryNode (C:\dev\rr7-issue\apps\reprod\node_modules\react-dom\cjs\react-dom-server.node.development.js:5704:22)
+    at renderNodeDestructive (C:\dev\rr7-issue\apps\reprod\node_modules\react-dom\cjs\react-dom-server.node.development.js:5530:11)
+    at renderElement (C:\dev\rr7-issue\apps\reprod\node_modules\react-dom\cjs\react-dom-server.node.development.js:5434:15)
+    at retryNode (C:\dev\rr7-issue\apps\reprod\node_modules\react-dom\cjs\react-dom-server.node.development.js:5704:22)
+    at renderNodeDestructive (C:\dev\rr7-issue\apps\reprod\node_modules\react-dom\cjs\react-dom-server.node.development.js:5530:11)
+    at renderElement (C:\dev\rr7-issue\apps\reprod\node_modules\react-dom\cjs\react-dom-server.node.development.js:5434:15)
+    at retryNode (C:\dev\rr7-issue\apps\reprod\node_modules\react-dom\cjs\react-dom-server.node.development.js:5704:22)
+    at renderNodeDestructive (C:\dev\rr7-issue\apps\reprod\node_modules\react-dom\cjs\react-dom-server.node.development.js:5530:11)
+    at renderNode (C:\dev\rr7-issue\apps\reprod\node_modules\react-dom\cjs\react-dom-server.node.development.js:6080:18)
+    at renderChildrenArray (C:\dev\rr7-issue\apps\reprod\node_modules\react-dom\cjs\react-dom-server.node.development.js:5965:9)
+    at retryNode (C:\dev\rr7-issue\apps\reprod\node_modules\react-dom\cjs\react-dom-server.node.development.js:5717:13)
+    at renderNodeDestructive (C:\dev\rr7-issue\apps\reprod\node_modules\react-dom\cjs\react-dom-server.node.development.js:5530:11)
+    at renderElement (C:\dev\rr7-issue\apps\reprod\node_modules\react-dom\cjs\react-dom-server.node.development.js:5196:13)
+    at retryNode (C:\dev\rr7-issue\apps\reprod\node_modules\react-dom\cjs\react-dom-server.node.development.js:5704:22)
+    at renderNodeDestructive (C:\dev\rr7-issue\apps\reprod\node_modules\react-dom\cjs\react-dom-server.node.development.js:5530:11)
+    at finishFunctionComponent (C:\dev\rr7-issue\apps\reprod\node_modules\react-dom\cjs\react-dom-server.node.development.js:4665:13)
+    at renderElement (C:\dev\rr7-issue\apps\reprod\node_modules\react-dom\cjs\react-dom-server.node.development.js:5107:11)
+    at retryNode (C:\dev\rr7-issue\apps\reprod\node_modules\react-dom\cjs\react-dom-server.node.development.js:5704:22)
+    at renderNodeDestructive (C:\dev\rr7-issue\apps\reprod\node_modules\react-dom\cjs\react-dom-server.node.development.js:5530:11)
+    at renderElement (C:\dev\rr7-issue\apps\reprod\node_modules\react-dom\cjs\react-dom-server.node.development.js:5042:11)
+    at retryNode (C:\dev\rr7-issue\apps\reprod\node_modules\react-dom\cjs\react-dom-server.node.development.js:5704:22)
+    at renderNodeDestructive (C:\dev\rr7-issue\apps\reprod\node_modules\react-dom\cjs\react-dom-server.node.development.js:5530:11)
+    at renderElement (C:\dev\rr7-issue\apps\reprod\node_modules\react-dom\cjs\react-dom-server.node.development.js:5434:15)
+    at retryNode (C:\dev\rr7-issue\apps\reprod\node_modules\react-dom\cjs\react-dom-server.node.development.js:5704:22)
+    at renderNodeDestructive (C:\dev\rr7-issue\apps\reprod\node_modules\react-dom\cjs\react-dom-server.node.development.js:5530:11)
+    at renderNode (C:\dev\rr7-issue\apps\reprod\node_modules\react-dom\cjs\react-dom-server.node.development.js:6080:18)
+    at renderChildrenArray (C:\dev\rr7-issue\apps\reprod\node_modules\react-dom\cjs\react-dom-server.node.development.js:5965:9)
+    at retryNode (C:\dev\rr7-issue\apps\reprod\node_modules\react-dom\cjs\react-dom-server.node.development.js:5717:13)
+    at renderNodeDestructive (C:\dev\rr7-issue\apps\reprod\node_modules\react-dom\cjs\react-dom-server.node.development.js:5530:11)
+    at renderElement (C:\dev\rr7-issue\apps\reprod\node_modules\react-dom\cjs\react-dom-server.node.development.js:5196:13)
+    at retryNode (C:\dev\rr7-issue\apps\reprod\node_modules\react-dom\cjs\react-dom-server.node.development.js:5704:22)
+    at renderNodeDestructive (C:\dev\rr7-issue\apps\reprod\node_modules\react-dom\cjs\react-dom-server.node.development.js:5530:11)
+    at finishFunctionComponent (C:\dev\rr7-issue\apps\reprod\node_modules\react-dom\cjs\react-dom-server.node.development.js:4665:13)
+    at renderElement (C:\dev\rr7-issue\apps\reprod\node_modules\react-dom\cjs\react-dom-server.node.development.js:5107:11)
+    at retryNode (C:\dev\rr7-issue\apps\reprod\node_modules\react-dom\cjs\react-dom-server.node.development.js:5704:22)
+    at performWork (C:\dev\rr7-issue\apps\reprod\node_modules\react-dom\cjs\react-dom-server.node.development.js:6507:19)
+    at AsyncLocalStorage.run (node:internal/async_local_storage/async_hooks:91:14)
+    at C:\dev\rr7-issue\apps\reprod\node_modules\react-dom\cjs\react-dom-server.node.development.js:7131:31
+Invalid hook call. Hooks can only be called inside of the body of a function component. This could happen for one of the following reasons:
+1. You might have mismatching versions of React and the renderer (such as React DOM)
+2. You might be breaking the Rules of Hooks
+3. You might have more than one copy of React in the same app
+See https://react.dev/link/invalid-hook-call for tips about how to debug and fix this problem.
 ```
-
-These targets are either [inferred automatically](https://nx.dev/concepts/inferred-tasks?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects) or defined in the `project.json` or `package.json` files.
-
-[More about running tasks in the docs &raquo;](https://nx.dev/features/run-tasks?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects)
-
-## Add new projects
-
-While you could add new projects to your workspace manually, you might want to leverage [Nx plugins](https://nx.dev/concepts/nx-plugins?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects) and their [code generation](https://nx.dev/features/generate-code?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects) feature.
-
-Use the plugin's generator to create new projects.
-
-To generate a new application, use:
-
-```sh
-npx nx g @nx/react:app demo
-```
-
-To generate a new library, use:
-
-```sh
-npx nx g @nx/react:lib mylib
-```
-
-You can use `npx nx list` to get a list of installed plugins. Then, run `npx nx list <plugin-name>` to learn about more specific capabilities of a particular plugin. Alternatively, [install Nx Console](https://nx.dev/getting-started/editor-setup?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects) to browse plugins and generators in your IDE.
-
-[Learn more about Nx plugins &raquo;](https://nx.dev/concepts/nx-plugins?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects) | [Browse the plugin registry &raquo;](https://nx.dev/plugin-registry?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects)
-
-## Set up CI!
-
-### Step 1
-
-To connect to Nx Cloud, run the following command:
-
-```sh
-npx nx connect
-```
-
-Connecting to Nx Cloud ensures a [fast and scalable CI](https://nx.dev/ci/intro/why-nx-cloud?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects) pipeline. It includes features such as:
-
-- [Remote caching](https://nx.dev/ci/features/remote-cache?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects)
-- [Task distribution across multiple machines](https://nx.dev/ci/features/distribute-task-execution?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects)
-- [Automated e2e test splitting](https://nx.dev/ci/features/split-e2e-tasks?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects)
-- [Task flakiness detection and rerunning](https://nx.dev/ci/features/flaky-tasks?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects)
-
-### Step 2
-
-Use the following command to configure a CI workflow for your workspace:
-
-```sh
-npx nx g ci-workflow
-```
-
-[Learn more about Nx on CI](https://nx.dev/ci/intro/ci-with-nx#ready-get-started-with-your-provider?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects)
-
-## Install Nx Console
-
-Nx Console is an editor extension that enriches your developer experience. It lets you run tasks, generate code, and improves code autocompletion in your IDE. It is available for VSCode and IntelliJ.
-
-[Install Nx Console &raquo;](https://nx.dev/getting-started/editor-setup?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects)
-
-## Useful links
-
-Learn more:
-
-- [Learn more about this workspace setup](https://nx.dev/getting-started/tutorials/react-monorepo-tutorial?utm_source=nx_project&amp;utm_medium=readme&amp;utm_campaign=nx_projects)
-- [Learn about Nx on CI](https://nx.dev/ci/intro/ci-with-nx?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects)
-- [Releasing Packages with Nx release](https://nx.dev/features/manage-releases?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects)
-- [What are Nx plugins?](https://nx.dev/concepts/nx-plugins?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects)
-
-And join the Nx community:
-- [Discord](https://go.nx.dev/community)
-- [Follow us on X](https://twitter.com/nxdevtools) or [LinkedIn](https://www.linkedin.com/company/nrwl)
-- [Our Youtube channel](https://www.youtube.com/@nxdevtools)
-- [Our blog](https://nx.dev/blog?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects)
